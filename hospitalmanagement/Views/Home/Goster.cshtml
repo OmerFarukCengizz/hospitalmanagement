@@ -1,0 +1,106 @@
+﻿@using hospitalmanagement
+@model List<hospitalmanagement.Models.Entities.islemler>
+@{
+    ViewBag.Title = "Goster";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<style>
+    .doz {
+        display: flex;
+    }
+
+    .asd {
+        table-layout: fixed;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .img {
+        width: 400px;
+        height:350px;
+        object-fit:cover;
+    }
+</style>
+<body>
+    <h2 style="text-align:center;margin-top:20px;">Sonuç Ekranı</h2>
+    <div style="margin-top:20px;text-align:center;">
+        @foreach (var urn in Model)
+        {
+            <b style="vertical-align: middle; font-size: 18px;">İstenilen Tarih: @urn.ISTENILATARIH </b>
+            <b style="vertical-align: middle; font-size: 18px;padding-left:100px;">Eklenen Tarih: @urn.EKLENENTARIH</b>
+
+        }
+    </div>
+    <div class="doz">
+        <table class="table table-bordered asd">
+            <tr>
+                <th>Tahlil</th>
+                <th>Röntgen</th>
+                <th>Ultrason</th>
+            </tr>
+
+            <tbody>
+                @foreach (var urn in Model)
+                {
+                    <tr>
+                        @if (urn.ISTAHLIL == false)
+                        {
+                            <td style="vertical-align: middle;">Tahlil İşleminiz Bulunmamaktadır.</td>
+                        }
+                        @if (urn.ISTAHLIL == true && urn.TAHLILIMG == null)
+                        {
+                            <td style="vertical-align: middle;">Tahlil Sonucunuz Beklemededir.</td>
+                        }
+                        @if (urn.ISTAHLIL == true && urn.TAHLILIMG != null)
+                        {
+                            <td><embed class="img" src="@urn.TAHLILIMG" alt="" /><br /><a href="@urn.TAHLILIMG" download style="text-decoration:none;">Tahlil Sonucunu İndir</a></td>
+                           
+                        }
+
+                        @if (urn.ISRONTGEN == false)
+                        {
+                            <td style="vertical-align: middle;">Röntgen İşleminiz Bulunmamaktadır.</td>
+                        }
+                        @if (urn.ISRONTGEN == true && urn.RONTGENIMG == null)
+                        {
+                            <td style="vertical-align: middle;">Röntgen Sonucunuz Beklemededir.</td>
+                        }
+                        @if (urn.ISRONTGEN == true && urn.RONTGENIMG != null)
+                        {
+                            <td><embed class="img" src="@urn.RONTGENIMG" alt="" /><br /><a href="@urn.RONTGENIMG" download style="text-decoration:none;">Röntgen Sonucunu İndir</a></td>
+                        }
+                        @if (urn.ISULTRASON == false)
+                        {
+                            <td style="vertical-align: middle;">Ultrason İşleminiz Bulunmamaktadır.</td>
+                        }
+                        @if (urn.ISULTRASON == true && urn.ULTRASONIMG == null)
+                        {
+                            <td style="vertical-align: middle;">Ultrason Sonucunuz Beklemededir.</td>
+                        }
+                        @if (urn.ISULTRASON == true && urn.ULTRASONIMG != null)
+                        {
+                            <td><embed class="img" src="@urn.ULTRASONIMG" alt="" /> <br /><a href="@urn.ULTRASONIMG" download style="text-decoration:none;">Ultrason Sonucunu İndir</a></td>
+                        }
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+    <div style="text-align:center;">
+        @foreach (var urn in Model)
+        {
+            if ((urn.ISTAHLIL == true && urn.TAHLILIMG == null) || (urn.ISRONTGEN == true && urn.RONTGENIMG == null) || (urn.ISULTRASON == true && urn.ULTRASONIMG == null))
+            {
+                <b style="vertical-align: middle;color:red;font-size:20px;">Sonuçlarınız Bekleniyor</b>
+            }
+            else
+            {
+                <b style="vertical-align: middle; color: green; font-size: 20px;">Sonuçlarınız Çıkmıştır,Doktorunuza Gidebilirsiniz.</b>
+            }
+        }
+    </div>
+</body>

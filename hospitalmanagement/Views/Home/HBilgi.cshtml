@@ -1,0 +1,39 @@
+﻿@model List<hospitalmanagement.Models.Entities.islemler>
+@{
+    ViewBag.Title = "HBilgi";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<style>
+    .doz {
+        display: flex;
+    }
+
+    .asd {
+        margin-top: 30px;
+        text-align: center;
+    }
+</style>
+
+<body>
+
+    <h2 style="text-align:center; color:red; margin-top:20px;">Lütfen Bir Tarih Seçiniz</h2>
+    <div class="doz">
+        <table class="table table-hover asd">
+            <tr>
+                <th>Tetkik İstenilen Tarih</th>
+                <th>Sonuçlar</th>
+            </tr>
+            <tbody>
+                @foreach (var frm in Model)
+                {
+                    <tr>
+                        <td>@frm.ISTENILATARIH</td>
+                        <td><a href="/Home/Goster/@frm.ISLEMID" class="btn btn-warning w-50">İşlemi Görüntüle</a> </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+

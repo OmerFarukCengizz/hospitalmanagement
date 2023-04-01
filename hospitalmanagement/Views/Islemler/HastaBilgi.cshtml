@@ -1,0 +1,42 @@
+﻿@using hospitalmanagement
+@model List<hospitalmanagement.Models.Entities.user>
+@{
+    ViewBag.Title = "HastaBilgi";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<style>
+    .doz {
+        display: flex;
+    }
+
+    .asd {
+        margin-top: 30px;
+        text-align: center;
+    }
+</style>
+
+<body>
+
+    <h2 style="text-align:center; color:red; margin-top:20px;">Lütfen Bir Hasta Seçiniz</h2>
+    <div class="doz">
+        <table class="table table-hover asd">
+            <tr>
+                <th>Hasta TC</th>
+                <th>Hasta Adı Soyadı</th>
+            </tr>
+            <tbody>
+                @foreach (var frm in Model)
+                {
+                    <tr>
+                        <td>@frm.USERTC</td>
+                        <td>@frm.USERAD @frm.USERSOYAD</td>
+                        <td><a href="/Islemler/HastaIslemBilgi/@frm.USERID" class="btn btn-warning w-50">Sonuçlar</a> </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+

@@ -1,0 +1,103 @@
+﻿@using hospitalmanagement.Models.Entities
+@model List<islemler>
+@{
+    ViewBag.Title = "Sonuc";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<style>
+    .doz {
+        display: flex;
+    }
+
+    .asd {
+        margin-top: 50px;
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="doz">
+        <table class="table table-bordered asd">
+            <tr>
+                <th>İşlem ID</th>
+                <th>Hasta TC</th>
+                <th>Hasta Adı</th>
+                <th>Tahlil</th>
+                <th>Röntgen</th>
+                <th>Ultrason</th>
+                <th>Durum</th>
+                <th>Güncelle</th>
+            </tr>
+
+            <tbody>
+                @foreach (var urn in Model)
+                {
+                    <tr>
+
+                        <td style="vertical-align: middle;">@urn.ISLEMID</td>
+                        <td style="vertical-align: middle;">@urn.user.USERTC</td>
+                        <td style="vertical-align: middle;">@urn.user.USERAD @urn.user.USERSOYAD</td>
+                        @if (urn.ISTAHLIL == true)
+                        {
+                            if (urn.TAHLILIMG == null)
+                            {
+                                <td style="vertical-align: middle;">Eklenecek</td>
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle;">Eklendi</td>
+                            }
+                        }
+                        @if (urn.ISTAHLIL == false)
+                        {
+                            <td style="vertical-align: middle;">Bulunmuyor</td>
+                        }
+                        @if (urn.ISRONTGEN == true)
+                        {
+                            if (urn.RONTGENIMG == null)
+                            {
+                                <td style="vertical-align: middle;">Eklenecek</td>
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle;">Eklendi</td>
+                            }
+                        }
+                        @if (urn.ISRONTGEN == false)
+                        {
+                            <td style="vertical-align: middle;">Bulunmuyor</td>
+                        }
+                        @if (urn.ISULTRASON == true)
+                        {
+                            if (urn.ULTRASONIMG == null)
+                            {
+                                <td style="vertical-align: middle;">Eklenecek</td>
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle;">Eklendi</td>
+                            }
+                        }
+                        @if (urn.ISULTRASON == false)
+                        {
+                            <td style="vertical-align: middle;">Bulunmuyor</td>
+                        }
+                        @{
+                            if ((urn.ISTAHLIL == true && urn.TAHLILIMG == null) || (urn.ISRONTGEN == true && urn.RONTGENIMG == null) || (urn.ISULTRASON == true && urn.ULTRASONIMG == null))
+                            {
+                                <td style="vertical-align: middle;color:red;">Bekleniyor</td>
+
+                            }
+                            else
+                            {
+                                <td style="vertical-align: middle;color:green;">Tamamlandı</td>
+                            }
+                        }
+                        <td style="vertical-align: middle;"><a href="/Islemler/Guncelle/@urn.ISLEMID" class="btn btn-primary">Güncelle</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</body>

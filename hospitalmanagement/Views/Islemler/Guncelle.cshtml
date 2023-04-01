@@ -1,0 +1,107 @@
+﻿@model hospitalmanagement.Models.Entities.islemler
+@{
+    ViewBag.Title = "Guncelle";
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+<style>
+
+</style>
+<div class="container" style="margin-top: 20px; align-items: center; justify-content: center;">
+    @using (Html.BeginForm("Guncel", "Islemler", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <div class="card-body p-2">
+                <div class="d-flex flex-row justify-content-center">
+                    <div style="margin: auto;">
+                        <div class="form-group text-center">
+                            @Html.TextBoxFor(m => m.ISLEMID, new { style = "display: none;" })
+                            @Html.TextBoxFor(m => m.USERID, new { style = "display: none;" })
+                            @Html.TextBoxFor(m => m.ISTAHLIL, new { style = "display: none;" })
+                            @Html.TextBoxFor(m => m.ISRONTGEN, new { style = "display: none;" })
+                            @Html.TextBoxFor(m => m.ISULTRASON, new { style = "display: none;" })
+                            <label style="margin-top:20px;">Hasta TC: </label>
+                            @Html.TextBoxFor(m => m.user.USERTC, new { @class = "form-group w-50", style = "margin-top:10px;", @readonly = "readonly" })
+                            <div class="form-group">
+                                <label style="margin-top: 20px; text-align: center;color:red;">İstenilen Tetkikler</label>
+                                <div>
+                                    @{
+                                        if (Model.ISTAHLIL == true)
+                                        {
+                                            <label style="margin-top:40px;">Tahlil: </label>
+                                            @Html.TextBoxFor(m => m.TACIKLAMA, new { @class = "form-group w-50", style = "margin-top:10px;", @readonly = "readonly" })
+                                            if (Model.TAHLILIMG == null)
+                                            {
+                                                <br />
+                                                <label style="margin-top:15px;">Tahlil Ekleyiniz: </label>
+                                                <input type="file" name="TAHLILIMG" />
+                                            }
+                                            else
+                                            {
+                                                <br />
+                                                <label style="margin-top: 15px; color: green;">Tahlil Eklendi </label>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(m => m.TAHLILIMG, new { style = "display: none;" })
+                                            <label style="margin-top:20px;">Tahlil Bulunmuyor </label>
+                                        }
+                                        <br />
+                                        if (Model.ISRONTGEN == true)
+                                        {
+                                            <label style="margin-top:40px;">Röntgen: </label>
+                                            @Html.TextBoxFor(m => m.RACIKLAMA, new { @class = "form-group w-50", style = "margin-top:10px;", @readonly = "readonly" })
+                                            if (Model.RONTGENIMG == null)
+                                            {
+                                                <br />
+                                                <label style="margin-top:15px;">Röntgen Ekleyiniz: </label>
+                                                <input type="file" name="RONTGENIMG" />
+                                            }
+                                            else
+                                            {
+                                                <br />
+                                                <label style="margin-top:15px;color:green;">Röntgen Eklendi </label>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(m => m.RONTGENIMG, new { style = "display: none;" })
+                                            <label style="margin-top:20px;">Röntgen Bulunmuyor </label>
+                                        }
+                                        <br />
+                                        if (Model.ISULTRASON == true)
+                                        {
+                                            <label style="margin-top:40px;">Ultrason: </label>
+                                            @Html.TextBoxFor(m => m.UACIKLAMA, new { @class = "form-group w-50", style = "margin-top:10px;", @readonly = "readonly" })
+                                            if (Model.ULTRASONIMG == null)
+                                            {
+                                                <br />
+                                                <label style="margin-top:15px;">Ultrason Ekleyiniz: </label>
+                                                <input type="file" name="ULTRASONIMG" />
+                                            }
+                                            else
+                                            {
+                                                <br />
+                                                <label style="margin-top:15px;color:green;">Ultrason Eklendi </label>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(m => m.ULTRASONIMG, new { style = "display: none;" })
+                                            <label style="margin-top:20px;">Ultrason Bulunmuyor </label>
+                                        }
+                                        <br />
+                                    }
+
+                                </div>
+                            </div>
+                            <div style="margin-top:30px;">
+                                <button class="btn btn-info">Tetkik Ekle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

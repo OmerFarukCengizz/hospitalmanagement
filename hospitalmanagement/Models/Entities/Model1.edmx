@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="hospitalmanageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="islemler">
+          <Key>
+            <PropertyRef Name="ISLEMID" />
+          </Key>
+          <Property Name="ISLEMID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="ISTAHLIL" Type="bit" />
+          <Property Name="TAHLILIMG" Type="nvarchar(max)" />
+          <Property Name="TACIKLAMA" Type="nvarchar(max)" />
+          <Property Name="ISRONTGEN" Type="bit" />
+          <Property Name="RONTGENIMG" Type="nvarchar(max)" />
+          <Property Name="RACIKLAMA" Type="nvarchar(max)" />
+          <Property Name="ISULTRASON" Type="bit" />
+          <Property Name="ULTRASONIMG" Type="nvarchar(max)" />
+          <Property Name="UACIKLAMA" Type="nvarchar(max)" />
+          <Property Name="ISTENILATARIH" Type="datetime" />
+          <Property Name="EKLENENTARIH" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERTC" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="USERAD" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="USERSOYAD" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="USERDOGUM" Type="date" Nullable="false" />
+          <Property Name="USERSIFRE" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="USERROL" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_islemler_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="islemler" Type="Self.islemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="islemler">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hospitalmanageModelStoreContainer">
+          <EntitySet Name="islemler" EntityType="Self.islemler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_islemler_user" Association="Self.FK_islemler_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="islemler" EntitySet="islemler" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hospitalmanageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERTC" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USERAD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USERSOYAD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USERDOGUM" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="USERSIFRE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USERROL" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="islemler" Relationship="hospitalmanageModel.FK_islemler_user" FromRole="user" ToRole="islemler" />
+        </EntityType>
+        <EntityContainer Name="hospitalmanageEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="user" EntityType="Self.user" />
+          <EntitySet Name="sysdiagrams" EntityType="hospitalmanageModel.sysdiagrams" />
+          <EntitySet Name="islemler" EntityType="hospitalmanageModel.islemler" />
+          <AssociationSet Name="FK_islemler_user" Association="hospitalmanageModel.FK_islemler_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="islemler" EntitySet="islemler" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="islemler">
+          <Key>
+            <PropertyRef Name="ISLEMID" />
+          </Key>
+          <Property Name="ISLEMID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="ISTAHLIL" Type="Boolean" />
+          <Property Name="ISRONTGEN" Type="Boolean" />
+          <Property Name="ISULTRASON" Type="Boolean" />
+          <Property Name="TAHLILIMG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RONTGENIMG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ULTRASONIMG" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="hospitalmanageModel.FK_islemler_user" FromRole="islemler" ToRole="user" />
+          <Property Name="TACIKLAMA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RACIKLAMA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UACIKLAMA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ISTENILATARIH" Type="DateTime" Precision="3" />
+          <Property Name="EKLENENTARIH" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_islemler_user">
+          <End Type="hospitalmanageModel.user" Role="user" Multiplicity="1" />
+          <End Type="hospitalmanageModel.islemler" Role="islemler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="islemler">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hospitalmanageModelStoreContainer" CdmEntityContainer="hospitalmanageEntities">
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="hospitalmanageModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="USERROL" ColumnName="USERROL" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="USERTC" ColumnName="USERTC" />
+                <ScalarProperty Name="USERAD" ColumnName="USERAD" />
+                <ScalarProperty Name="USERSOYAD" ColumnName="USERSOYAD" />
+                <ScalarProperty Name="USERDOGUM" ColumnName="USERDOGUM" />
+                <ScalarProperty Name="USERSIFRE" ColumnName="USERSIFRE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="hospitalmanageModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="islemler">
+            <EntityTypeMapping TypeName="hospitalmanageModel.islemler">
+              <MappingFragment StoreEntitySet="islemler">
+                <ScalarProperty Name="EKLENENTARIH" ColumnName="EKLENENTARIH" />
+                <ScalarProperty Name="ISTENILATARIH" ColumnName="ISTENILATARIH" />
+                <ScalarProperty Name="UACIKLAMA" ColumnName="UACIKLAMA" />
+                <ScalarProperty Name="RACIKLAMA" ColumnName="RACIKLAMA" />
+                <ScalarProperty Name="TACIKLAMA" ColumnName="TACIKLAMA" />
+                <ScalarProperty Name="ULTRASONIMG" ColumnName="ULTRASONIMG" />
+                <ScalarProperty Name="RONTGENIMG" ColumnName="RONTGENIMG" />
+                <ScalarProperty Name="TAHLILIMG" ColumnName="TAHLILIMG" />
+                <ScalarProperty Name="ISULTRASON" ColumnName="ISULTRASON" />
+                <ScalarProperty Name="ISRONTGEN" ColumnName="ISRONTGEN" />
+                <ScalarProperty Name="ISTAHLIL" ColumnName="ISTAHLIL" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="ISLEMID" ColumnName="ISLEMID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
